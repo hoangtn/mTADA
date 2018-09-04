@@ -10,10 +10,15 @@ We need to install two packages: *rstan* and *locfit*
 
 # 2. Running mTADA
 
-## 2.1 Running mTADA when single-trait parameters are available
+## Running mTADA when single-trait parameters are available
 
 Please follow this link: [Running_mTADA_from_single-trait_results.ipynb](Running_mTADA_from_single-trait_results.ipynb)
 
-## 2.2 Running mTADA with only summary statistics (variant counts for each gene)
 
-Please folow this link
+# Citation
+
+Hoang T. Nguyen, Amanda Dobbyn, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F Sullivan, Xin He,  Eli Ayumi Stahl
+
+**mTADA: a framework for analyzing de novo mutations in multiple traits**
+
+Link: https://doi.org/10.1101/406868
