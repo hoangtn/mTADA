@@ -21,4 +21,5 @@ Hoang T. Nguyen, Amanda Dobbyn, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, P
 
 **mTADA: a framework for analyzing de novo mutations in multiple traits**
 
-Link: https://doi.org/10.1101/406868
+Link: https://nature-research-under-consideration.nature.com/users/37265-nature-communications/posts/38823-mtada-a-framework-for-analyzing-de-novo-mutations-in-multiple-traits
+
