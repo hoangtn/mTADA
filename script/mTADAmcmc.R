@@ -1,4 +1,9 @@
 ##Hoang Nguyen: Jan 12, 2017
+##If users have prior information for pi3 (p12 in this script) then they can set prior information for this parameter
+
+##gO: gene-level genetic overl
+##gO = p12/(pi01 + pi02 - p12)
+
 DNandCC2traits <- "
 data {
     int<lower=1> NN; //Number of genes
