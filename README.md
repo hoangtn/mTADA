@@ -14,7 +14,9 @@ We need to install two packages: *rstan* and *locfit*
 
 Please follow this link: [Running_mTADA_from_single-trait_results.ipynb](Running_mTADA_from_single-trait_results.ipynb)
 
-### Note: From mTADA's results, to obtain results for single traits, users can use pFIRST + pBOTH and pSECOND + pBOTH for the first and the second traits respectively.
+### Note:
+
+From mTADA's results, to obtain results for single traits, users can use pFIRST + pBOTH and pSECOND + pBOTH for the first and the second traits respectively.
 
 # Citation
 
@@ -22,5 +24,6 @@ Hoang T. Nguyen, Amanda Dobbyn, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, P
 
 **mTADA: a framework for analyzing de novo mutations in multiple traits**
 
-Link: https://nature-research-under-consideration.nature.com/users/37265-nature-communications/posts/38823-mtada-a-framework-for-analyzing-de-novo-mutations-in-multiple-traits
+Link: https://www.biorxiv.org/content/10.1101/406868v1
+
 
