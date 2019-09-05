@@ -14,6 +14,7 @@ We need to install two packages: *rstan* and *locfit*
 
 Please follow this link: [Running_mTADA_from_single-trait_results.ipynb](Running_mTADA_from_single-trait_results.ipynb)
 
+### Note: From mTADA's results, to obtain results for single traits, users can use pFIRST + pBOTH and pSECOND + pBOTH for the first and the second traits respectively.
 
 # Citation
 
