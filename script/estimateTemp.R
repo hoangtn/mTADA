@@ -11,7 +11,7 @@ estimatePars <- function(pars, mcmcResult, nThin = NULL){
 
 #    pars <- pars[grep("hyper|pi|alpha", pars)]
     message("====\nOnly pi, alpha and hyper parameters are estimated in this step\n",
-            "gTADA does not calculate HPDs for hyper betas, just their medians\n===\n")
+            "The method does not calculate HPDs for hyper betas, just their medians\n===\n")
 
     if (length(pars[!is.element(pars, colnames(mcmcDataFrame))]) > 0)
         warning((pars[!is.element(pars, colnames(mcmcDataFrame))]), " is/are not in mcmc chains")
@@ -19,7 +19,7 @@ estimatePars <- function(pars, mcmcResult, nThin = NULL){
 
     hpdList <- NULL
     for (iPar in pars) {
-        message("Estimating for ", iPar)
+       # message("Estimating for ", iPar)
         xData <-  mcmcDataFrame[, iPar]
         if ((sd(xData) > 10^-10) & (length(grep("Beta", iPar)) == 0))
             hpdList <- rbind(hpdList, loc1stats(xData)[1:3])

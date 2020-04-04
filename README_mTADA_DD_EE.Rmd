@@ -1,0 +1,238 @@
+---
+title: "mTADA"
+output:
+  html_notebook: default
+  pdf_document: default
+header-includes: \usepackage{xcolor}
+---
+
+This notebook descibes steps used to jointly analyze two traits by $\texttt{mTADA}$.
+
+
+## I. Introduction
+
+**$\texttt{mTADA}$ jointly analyze de novo mutations (DNMs) of two traits to 1)  estimate the gene-level genetic overlap of the two traits; 2) report shared and specific risk genes; and 3) identify additional risk genes for each analyzed trait.**
+
+The method requires genetic parameters from single-trait analyses (the third and fourth columns in Table 1 below). Users can obtain single-trait parameters from $\texttt{extTADA/TADA}$ methods. 
+
+
+
+**Table 1. $\texttt{mTADA}$ model for one variant category at the $i^{th}$ gene**.
+
+**Hypothesis** |Proportion|	First trait|	Second trait|
+-----------|----------|------------|--------------|
+$H_0$| $\pi_0$ | $x_{i1}$ \~ $Poisson(2N_1\mu_i)$ | $x_{i2} \sim Poisson(2N_2\mu_i)$|
+$H_1$| $\pi_1$ | $x_{i1} \sim Poisson(2N_1\gamma_1\mu_i)$; $\gamma_1$ \~ $Gamma(\bar{\gamma_1}\beta_1,\beta_1)$  | $x_{i2} \sim Poisson(2N_2\mu_i)$|
+$H_2$| $\pi_2$ | $x_{i1} \sim Poisson(2N_1\mu_i)$ | $x_{i2} \sim Poisson(2N_2\gamma_2\mu_i)$; $\gamma_2$ \~ $Gamma(\bar{\gamma_2}\beta_2,\beta_2)$|
+$H_3$| $\pi_3$ | $x_{i1} \sim Poisson(2N_1\gamma_1\mu_i)$; $\gamma_1$ \~ $Gamma(\bar{\gamma}_1\beta_1,\beta_1)$ | $x_{i2} \sim Poisson(2N_2\gamma_2\mu_i)$; $\gamma_2$ \~ $Gamma(\bar{\gamma}_2\beta_2,\beta_2)$|
+
+**Figure 1. $\texttt{mTADA}$ framework.**
+
+![](data/mTADAmethod.jpeg)
+
+#### Data for reproducible analyses
+
+Data used in the main manuscript are inside the folder [data](data):
+
+  1) [FullDataSet_DenovoMutations_for_mTADA.txt](data/FullDataSet_DenovoMutations_for_mTADA.txt): all gene-level de novo mutations.
+
+  2) [SingleTrait_Parameters.txt](data/SingleTrait_Parameters.txt): all single-trait parameters. We used $\texttt{extTADA}$ to estimate these parameters.  
+  
+      *Note*: Users can re-run all these single-trait analyses by following an example here: https://github.com/hoangtn/extTADA. 
+
+
+
+## II. Requirements
+
+**$\texttt{mTADA}$ is written in $\texttt{R}$**. Other $\texttt{R}$ packages are required to run $\texttt{mTADA}$:
+
+- $\texttt{rstan}$: https://mc-stan.org/rstan/. 
+
+- $\texttt{locfit}$: https://cran.r-project.org/web/packages/locfit/index.html.
+
+
+## III. An example: joint analysis of DD and EE DNMs.
+
+Only one function $\texttt{mTADA}$ (in the **Run $\texttt{mTADA}$** section) is used to obtain results. However, some additional steps are described here. 
+
+###  Load the source codes
+```{r}
+dataDir <- "./data/"
+sourceDir <- "./script/"
+rFile <- dir(sourceDir, ".R$")
+for (ir in 1:length(rFile)){
+    source(paste0(sourceDir, rFile[ir]))
+}
+```
+
+### Read the data and single-trait parameters
+```{r}
+## De novo data
+data <- read.table(paste0(dataDir, "FullDataSet_DenovoMutations_for_mTADA.txt"), header = TRUE, as.is = TRUE) 
+## Single-trait parameters
+sPar <- read.table(paste0(dataDir, "SingleTrait_Parameters.txt"), as.is = TRUE, header = TRUE)
+
+trait1 = "DD"
+trait2 = "EE"
+##Take a quick look at the single-trait parameters of DD and EE
+sPar[grep(trait1, sPar[, 1]), ] ##Trait 1
+sPar[grep(trait2, sPar[, 1]), ] ##Trait 2
+```
+
+### Set parameters for two traits.
+
+As described above, $\texttt{mTADA}$ needs single-trait parameters: 
+
+  - the number of trios: *ntrio*;
+  
+  - the mean and disperson parameters of relative risks: $\bar{\gamma_j}$ and $\beta_j$ (j=$1, 2$);
+  
+  - the proportion of risk genes: $\pi^S_1$ and $\pi^S_2$.
+
+**All these parameters are shown above.**
+
+```{r}
+### Trait-1 INFORMATION
+ntrio1 = 4293 #family numbers                                                                   
+p1 = 0.02936283 #The proportion of risk genes, this is p1S                                
+meanGamma1 = c(22.31762802,  86.03966530) #Mean Gamma of two categories                     
+beta1 = c(0.82594514, 0.80689775) #Beta values inside the distribution RR ~ Gamma(meanRR*beta, beta)     
+dataT1 <- data[, paste0(c("dn_damaging_", "dn_lof_"), trait1)] #De novo data              
+muDataT1 <- data[, c("mut_damaging", "mut_lof")] #Mutation data of the first trait              
+##########################################
+### Trait-2 INFORMATION
+ntrio2 = 356
+p2 = 0.01548789 #This is p2S
+meanGamma2 = c(51.08181282, 65.15189031)
+beta2 = c(0.80906448, 0.80774192)
+dataT2 <- data[, paste0(c("dn_damaging_", "dn_lof_"), trait2)]
+muDataT2 <- muDataT1
+```
+
+### Run $\texttt{mTADA}$
+
+In this example, we only use a small number of iterations and two MCMC chains. However, users can change these parameters to obtain more reliable results. 
+
+```{r}
+nIteration = 2000 #This should be higher to obtain better results.
+nChain = 2 #The number of MCMC chains
+
+##########MAIN ANALYSIS
+mTADAresults <- mTADA(geneName = data[, 1],
+    #######Trait-1 information
+                  ntrio1 = ntrio1, # Trio number of Trait 1
+                  p1 = p1, #Risk-gene proportion of Trait 1
+                  dataDN1 = data.frame(dataT1), #De novo data of Trait 1
+                  mutRate1 = data.frame(muDataT1), # Mutation rates of Trait 1
+                  hyperGammaMeanDN1 = c(meanGamma1), # Mean relative risks of Trait 1
+                  hyperBetaDN01 = beta1, #NULL, #array(c(1, 1)),                                        
+    #######Trait-2 information
+                  ntrio2 = ntrio2, # Trio number of Trait 2
+                  p2 = p2, #Risk-gene proportion of Trait 2
+                  dataDN2 = data.frame(dataT2), # De novo data of Trait 2
+                  mutRate2 = data.frame(muDataT2), # Mutation rates of Trait 2
+                  hyperGammaMeanDN2 = c(meanGamma2), # Mean relative risks of Trait 2
+                  hyperBetaDN02 = beta2, #NULL, #array(c(1, 1)),                                    
+    ####Other parameters               
+                  nIteration = nIteration,
+                  useMCMC = TRUE, #If FALSE, it will use the 'Variational Bayes' approach. 
+                  nChain = nChain
+                      )
+```
+
+### Get results
+
+$\texttt{mTADA}$'s output includes:
+
+  1) $\texttt{data}$: main gene-level results (posterior probabilities for the four models as described in the main manuscript: PP0, PP1, PP2 and PP3).
+  
+  2) $\texttt{probModel}$: a vector of $\pi_j, (j=0..3)$ in Table 1.
+  
+  3) $\texttt{pars}$: the estimated value and credible interval of $\pi_3$ (described as p12 in the our code).
+  
+  4) $\texttt{mcmcData}$: MCMC sampling results for $\pi_3$.
+  
+The most important information is from $\texttt{data}$. **Users can use this information to obtain top prioritized genes for downstream analyses (e.g., top shared/specific genes, top genes for each trait)**. However, we will also take a quick look at all these information.
+
+#### Results for downstream analyses (gene-level posteior probabilities of four models)
+
+```{r}
+fData <- mTADAresults$data ## Full analysis results of the two-trait analysis.
+head(fData)
+```
+
+##### Genes with PP3 > 0.8 (Posterior probabilities of Model 3)
+```{r}
+fData[fData$BOTH > 0.8, ]
+```
+##### Genes with PP1 > 0.8 (Posterior probabilities of Model 1)
+```{r}
+fData[fData$FIRST > 0.8, ]
+```
+##### Genes with PP2 > 0.8 (Posterior probabilities of Model 2)
+```{r}
+fData[fData$SECOND > 0.8, ]
+```
+
+#### Use mTADA's results for single-trait analyses.
+We can obtain single-trait results by summing PP1 and PP3 (Trait 1) or PP2 and PP3 (Trait 2).
+
+##### Trait 1
+```{r}
+fData[, 'pTrait1'] <- fData[, 'BOTH'] + fData[, 'FIRST']
+fData1 <- fData[fData$pTrait1 > 0.8, ]
+head(fData1[, c(1:5, 10)])
+```
+
+##### Trait 2
+```{r}
+fData[, 'pTrait2'] <- fData[, 'BOTH'] + fData[, 'SECOND']
+fData2 <- fData[fData$pTrait2 > 0.8, ]
+head(fData2[, c(1:5, 11)])
+```
+#### Other information
+
+Some additional information can be obtained from mTADA's results.
+```{r}
+pCI <- mTADAresults$pars ## Genetic parameters
+piValue <- mTADAresults$probModel ## Posterior probabilities of genes for four models
+mcmcResult <- mTADAresults$mcmcData ##MCMC results
+```
+
+##### The proportions of risk genes
+
+*piValue* is a vector of $\pi$ values. In the result below, pNO, pFIRST, pSECOND, and pBOTH are 
+$\pi_0$, $\pi_1$, $\pi_2$ and $\pi_3$ respectively in **Table 1**.
+
+```{r}
+piValue
+
+```
+
+##### Estimated information of $\pi_3$.
+
+Credible-interval information is from $pCI$.
+
+```{r}
+pCI ## Mode: estimated values; CI: credible interval with low (l) and upper (u) values
+```
+
+
+To check the convergent information of $\pi_3$, we can visualize MCMC results.
+
+```{r}
+## p12 is pi3 in the model
+plotParHeatmap1(mcmcResult = mcmcResult, pars = c('p12', 'gammaMeanDN1[1]'))
+
+```
+
+### Citation
+
+**$\texttt{mTADA}$: a framework for identifying risk genes from de novo mutations in multiple traits.** 
+Hoang T. Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F Sullivan8, Xin He, Eli A. Stahl. 
+
+
+
+
+
+

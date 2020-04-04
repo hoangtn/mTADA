@@ -21,7 +21,8 @@ mTADA <- function(geneName = NULL,
                   nIteration = 5000,
                   outSample = 1000,
                   nChain = 1,
-                  printMessage = TRUE,
+                  nCore = NULL,
+                  printMessage = FALSE, #
                   useMCMC = FALSE,
                   iSeed = NULL
     ){
@@ -31,6 +32,10 @@ mTADA <- function(geneName = NULL,
     Ndn1 <- rep(ntrio1, NCdn1)
     Ndn2 <- rep(ntrio2, NCdn2)
 
+    if ((is.null(nCore)) & (useMCMC)){
+        message("No information for core numbers (nCore); therefore, nCore = nChain: ", nChain, " core(s) is/are used\n")   
+        nCore = nChain
+    }
     if (is.null(hyperBetaDN01))
         hyperBetaDN01 <- rep(1, NCdn1)
     if (is.null(hyperBetaDN02))
@@ -72,14 +77,18 @@ mTADA <- function(geneName = NULL,
     message("===================\nBuilding the model\n=================\n")
 
     m1 = stan_model(model_code = DN2traits)
-    message("===================\nRunning VB\n========================\n")
+
     if (useMCMC){
         message("\n=======Use MCMC===========\n")
         vb1 <- stan(model_code=DN2traits, data = mixDataKclasses,
-                init = initList, iter = nIteration, chains = nChain, pars = c('p12', 'gammaMeanDN1'), 
+                    init = initList, iter = nIteration, chains = nChain,
+                    cores = nCore,
+                    pars = c('p12', 'gammaMeanDN1'), 
                 seed = iSeed)
     } else {
-        message("\n=======Not use MCMC===========\n")        
+        message("\n================Not use MCMC===========\n")
+        message("===================Running VB========================\n")
+        
     vb1 <- vb(object = m1, data = mixDataKclasses, pars = c('p12', 'gammaMeanDN1'),
           init = initList[[1]], iter = nIteration, seed = iSeed)
 
@@ -88,6 +97,11 @@ mTADA <- function(geneName = NULL,
     par2 = estimatePars(pars = c("p12", "gammaMeanDN1[1]"),
              mcmcResult = vb1)
 
+    if (as.numeric(par2[1, 1]) < 10^-4){
+        message('pi3 is very small; therfore, mTADA considers no overlapping information and set pi3 =0\n')
+        par2[1, 1] <- 0        
+    }
+    
     if (printMessage)
         print(par2)
  ########################Calculate PP
@@ -109,11 +123,11 @@ mTADA <- function(geneName = NULL,
     p00 = c(1 -(p1 + p2 - pBoth), pBoth, p1 - pBoth, p2 - pBoth)
     prob0 = p00
 
-    if (!(identical(g0, beta.dn))){
-        message("\nMean gammas and betas have different dimension\n")
-        print(g0)
-        print(beta.dn)
-    }
+#    if (!(identical(g0, beta.dn))){
+ #       message("\nMean gammas and betas have different dimension\n")
+#       print(g0)
+ #       print(beta.dn)
+  #  }
     
 #    geneName = data[, 1]
     if (is.null(geneName))
@@ -121,8 +135,7 @@ mTADA <- function(geneName = NULL,
     x1 <- posProb.dn(dnData = dnData, muAll = muAll,
               gamma.mean.dn = gamma.mean.dn, Ndn = Ndn,
               prob0 = prob0, beta.dn = beta.dn)
-#    xGroup <- apply(x1$PP[, c("NO", "FIRST", "SECOND", "BOTH")], 1,
- #                   function(x) which(x == max(x)) - 1)
+
     d11 <- data.frame(geneName = geneName, dnData, x1$PP) #, xGroup)
 
     pOut = p00[c(1, 3, 4, 2)]

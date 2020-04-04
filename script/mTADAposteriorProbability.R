@@ -12,7 +12,7 @@ posProb.dn  <- function(dnData, muAll, gamma.mean.dn, Ndn, prob0, beta.dn){
     bF <- array(0, dim = c(m, 4)) ##The first column is for NULL model
     ###############Calculate BF for all categories
     for (j in 1:nGdn){
-        message("j = ", j)
+#        message("j = ", j)
 ###NULL
         marg.lik0 <- dpois(dnData[, j], 2*Ndn[j]*muAll[, j])
 #        marg.lik0 <- dnbinom(dnData[, j], beta.dn[i, j], beta.dn[i, j]/(beta.dn[i, j] + 2*Ndn[j]*muAll[, j]))
@@ -27,7 +27,7 @@ posProb.dn  <- function(dnData, muAll, gamma.mean.dn, Ndn, prob0, beta.dn){
             bF[, i] <- bF[, i ] + log(marg.lik1[, i])# - log(marg.lik0)
             ##bF = 1:4, but calculate for 2:4
         }
-        print(j)
+#        print(j)
         }
     ##########################
     bF <- exp(bF)
