@@ -50,6 +50,7 @@ Data used in the main manuscript are inside the folder [data](data):
 
 - $\texttt{locfit}$: https://cran.r-project.org/web/packages/locfit/index.html.
 
+Versions were used in the example below: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
 
 ## III. An example: joint analysis of DD and EE DNMs.
 
