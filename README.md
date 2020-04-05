@@ -6,9 +6,7 @@ for each analyzed trait.**
 
 ### Usage
 
-*git clone https://github.com/hoangtn/mTADA.git*
-
-Users can re-produce examples below to know how to use mTADA: [README_mTADA_DD_EE.md](README_mTADA_DD_EE.md) or [README_mTADA_DD_EE.pdf](README_mTADA_DD_EE.pdf).
+We describe steps to run `mTADA` in this file: [README_mTADA_DD_EE.md](README_mTADA_DD_EE.md) or [README_mTADA_DD_EE.pdf](README_mTADA_DD_EE.pdf).
 
 ### Citation
 
