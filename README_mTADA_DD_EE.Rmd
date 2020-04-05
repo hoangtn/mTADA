@@ -7,6 +7,8 @@ output:
 header-includes: \usepackage{xcolor}
 ---
 
+# $\texttt{mTADA}$
+
 This notebook descibes steps used to jointly analyze two traits by $\texttt{mTADA}$.
 
 
@@ -85,7 +87,7 @@ As described above, $\texttt{mTADA}$ needs single-trait parameters:
 
   - the number of trios: *ntrio*;
   
-  - the mean and disperson parameters of relative risks: $\bar{\gamma_j}$ and $\beta_j$ (j=$1, 2$);
+  - the mean and disperson parameters of relative risks: $\bar{\gamma}_j$ and $\beta_j$ (j=$1, 2$);
   
   - the proportion of risk genes: $\pi^S_1$ and $\pi^S_2$.
 
@@ -140,7 +142,7 @@ mTADAresults <- mTADA(geneName = data[, 1],
                       )
 ```
 
-### Get results
+### Obtain analysis results
 
 $\texttt{mTADA}$'s output includes:
 
@@ -154,9 +156,9 @@ $\texttt{mTADA}$'s output includes:
   
 The most important information is from $\texttt{data}$. **Users can use this information to obtain top prioritized genes for downstream analyses (e.g., top shared/specific genes, top genes for each trait)**. However, we will also take a quick look at all these information.
 
-#### Results for downstream analyses (gene-level posteior probabilities (PPs) of four models)
+#### Results for downstream analyses (gene-level posterior probabilities (PPs) of four models)
 
-We demonstrate how to choose top proritized genes from $\texttt{mTADA}$'s results using a PP threshold of 0.8. These genes can be shared genes, specific genes; or genes for single traits.
+We will demonstrate how to choose top proritized genes from $\texttt{mTADA}$'s results using a PP threshold of 0.8. These genes can be shared genes, specific genes; or genes for single traits.
 
 
 
@@ -167,16 +169,23 @@ head(fData)
 
 ##### Genes with PP3 > 0.8 (Posterior probabilities of Model 3)
 
+Shared risk genes between DD and EE.
 
 
 ```{r}
 fData[fData$BOTH > 0.8, ]
 ```
 ##### Genes with PP1 > 0.8 (Posterior probabilities of Model 1)
+
+Specific risk genes for DD.
+
 ```{r}
 fData[fData$FIRST > 0.8, ]
 ```
 ##### Genes with PP2 > 0.8 (Posterior probabilities of Model 2)
+
+Specific risk genes for EE.
+
 ```{r}
 fData[fData$SECOND > 0.8, ]
 ```
@@ -185,6 +194,9 @@ fData[fData$SECOND > 0.8, ]
 We can obtain single-trait results by summing PP1 and PP3 (Trait 1) or PP2 and PP3 (Trait 2).
 
 ##### Trait 1
+
+Top prioritized genes of DD.
+
 ```{r}
 fData[, 'pTrait1'] <- fData[, 'BOTH'] + fData[, 'FIRST']
 fData1 <- fData[fData$pTrait1 > 0.8, ]
@@ -192,6 +204,9 @@ head(fData1[, c(1:5, 10)])
 ```
 
 ##### Trait 2
+
+Top prioritized genes of EE.
+
 ```{r}
 fData[, 'pTrait2'] <- fData[, 'BOTH'] + fData[, 'SECOND']
 fData2 <- fData[fData$pTrait2 > 0.8, ]
@@ -236,7 +251,7 @@ plotParHeatmap1(mcmcResult = mcmcResult, pars = c('p12', 'gammaMeanDN1[1]'))
 ## Citation
 
 **$\texttt{mTADA}$: a framework for identifying risk genes from de novo mutations in multiple traits.** 
-Hoang T. Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F Sullivan8, Xin He, Eli A. Stahl. 
+Hoang T. Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F Sullivan, Xin He, Eli A. Stahl. 
 
 
 
