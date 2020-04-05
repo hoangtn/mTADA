@@ -1,8 +1,12 @@
 ---
 title: "mTADA"
 output:
-  md_document:
-    variant: markdown_github
+  html_notebook:
+    toc: yes
+  pdf_document: default
+  html_document:
+    df_print: paged
+    toc: yes
 header-includes: \usepackage{xcolor}
 ---
 
@@ -50,20 +54,18 @@ Data used in the main manuscript are inside the folder [data](data):
 
 - $\texttt{locfit}$: https://cran.r-project.org/web/packages/locfit/index.html.
 
-Versions were used in the example below: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
 
 ## III. An example: joint analysis of DD and EE DNMs.
 
 Only one function $\texttt{mTADA}$ (in the **Run $\texttt{mTADA}$** section) is used to obtain results. However, some additional steps are described here. 
 
+Software versions were used in the example below: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
+
+
 ###  Load the source codes
 ```{r}
 dataDir <- "./data/"
-sourceDir <- "./script/"
-rFile <- dir(sourceDir, ".R$")
-for (ir in 1:length(rFile)){
-    source(paste0(sourceDir, rFile[ir]))
-}
+source("script/mTADA.R")
 ```
 
 ### Read the data and single-trait parameters
@@ -227,7 +229,7 @@ plotParHeatmap1(mcmcResult = mcmcResult, pars = c('p12', 'gammaMeanDN1[1]'))
 
 ```
 
-### Citation
+## Citation
 
 **$\texttt{mTADA}$: a framework for identifying risk genes from de novo mutations in multiple traits.** 
 Hoang T. Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F Sullivan8, Xin He, Eli A. Stahl. 
