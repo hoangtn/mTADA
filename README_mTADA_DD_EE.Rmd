@@ -1,11 +1,8 @@
 ---
 title: "mTADA"
 output:
-  html_notebook:
-    toc: yes
-  pdf_document: default
-  html_document:
-    df_print: paged
+  md_document:
+    variant: markdown_github
     toc: yes
 header-includes: \usepackage{xcolor}
 ---
@@ -38,9 +35,9 @@ $H_3$| $\pi_3$ | $x_{i1} \sim Poisson(2N_1\gamma_1\mu_i)$; $\gamma_1$ \~ $Gamma(
 
 Data used in the main manuscript are inside the folder [data](data):
 
-  1) [FullDataSet_DenovoMutations_for_mTADA.txt](data/FullDataSet_DenovoMutations_for_mTADA.txt): all gene-level de novo mutations.
+  1) [FullDataSet_DenovoMutations_for_mTADA.txt](data/FullDataSet_DenovoMutations_for_mTADA.txt): all gene-level de novo mutations. These DNMs are used in the main manuscript.
 
-  2) [SingleTrait_Parameters.txt](data/SingleTrait_Parameters.txt): all single-trait parameters. We used $\texttt{extTADA}$ to estimate these parameters.  
+  2) [SingleTrait_Parameters.txt](data/SingleTrait_Parameters.txt): all single-trait parameters. We used $\texttt{extTADA}$ to estimate these parameters from the DNMs above. 
   
       *Note*: Users can re-run all these single-trait analyses by following an example here: https://github.com/hoangtn/extTADA. 
 
@@ -54,12 +51,12 @@ Data used in the main manuscript are inside the folder [data](data):
 
 - $\texttt{locfit}$: https://cran.r-project.org/web/packages/locfit/index.html.
 
+Software versions were used in our analyses: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
 
 ## III. An example: joint analysis of DD and EE DNMs.
 
-Only one function $\texttt{mTADA}$ (in the **Run $\texttt{mTADA}$** section) is used to obtain results. However, some additional steps are described here. 
+Only one function $\texttt{mTADA}$ (in the **Run $\texttt{mTADA}$** section) is used to obtain results. Therefore, users can go directly to the **Run $\texttt{mTADA}$** section to run $\texttt{mTADA}$. However, some additional steps are described here. 
 
-Software versions were used in the example below: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
 
 
 ###  Load the source codes
