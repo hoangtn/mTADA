@@ -53,7 +53,7 @@ Data used in the main manuscript are inside the folder [data](data):
 
 Software versions were used in our analyses: $\texttt{R}$ version 3.5.2, $\texttt{locfit}$ version 1.5-9.1, and $\texttt{rstan}$ version 2.18.2.
 
-## III. An example: joint analysis of DD and EE DNMs.
+## III. An example: joint analysis of DD and EE DNMs
 
 Only one function $\texttt{mTADA}$ (in the **Run $\texttt{mTADA}$** section) is used to obtain results. Therefore, users can go directly to the **Run $\texttt{mTADA}$** section to run $\texttt{mTADA}$. However, some additional steps are described here. 
 
@@ -79,7 +79,7 @@ sPar[grep(trait1, sPar[, 1]), ] ##Trait 1
 sPar[grep(trait2, sPar[, 1]), ] ##Trait 2
 ```
 
-### Set parameters for two traits.
+### Set parameters for two traits
 
 As described above, $\texttt{mTADA}$ needs single-trait parameters: 
 
@@ -154,7 +154,11 @@ $\texttt{mTADA}$'s output includes:
   
 The most important information is from $\texttt{data}$. **Users can use this information to obtain top prioritized genes for downstream analyses (e.g., top shared/specific genes, top genes for each trait)**. However, we will also take a quick look at all these information.
 
-#### Results for downstream analyses (gene-level posteior probabilities of four models)
+#### Results for downstream analyses (gene-level posteior probabilities (PPs) of four models)
+
+We demonstrate how to choose top proritized genes from $\texttt{mTADA}$'s results using a PP threshold of 0.8. These genes can be shared genes, specific genes; or genes for single traits.
+
+
 
 ```{r}
 fData <- mTADAresults$data ## Full analysis results of the two-trait analysis.
@@ -162,6 +166,9 @@ head(fData)
 ```
 
 ##### Genes with PP3 > 0.8 (Posterior probabilities of Model 3)
+
+
+
 ```{r}
 fData[fData$BOTH > 0.8, ]
 ```
