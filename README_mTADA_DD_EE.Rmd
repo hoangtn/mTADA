@@ -24,7 +24,7 @@ The method requires genetic parameters from single-trait analyses (the third and
 -----------|----------|------------|--------------|
 $H_0$| $\pi_0$ | $x_{i1}$ \~ $Poisson(2N_1\mu_i)$ | $x_{i2} \sim Poisson(2N_2\mu_i)$|
 $H_1$| $\pi_1$ | $x_{i1} \sim Poisson(2N_1\gamma_1\mu_i)$; $\gamma_1$ \~ $Gamma(\bar{\gamma_1}\beta_1,\beta_1)$  | $x_{i2} \sim Poisson(2N_2\mu_i)$|
-$H_2$| $\pi_2$ | $x_{i1} \sim Poisson(2N_1\mu_i)$ | $x_{i2} \sim Poisson(2N_2\gamma_2\mu_i)$; $\gamma_2$ \~ $Gamma(\bar{\gamma_2}\beta_2,\beta_2)$|
+$H_2$| $\pi_2$ | $x_{i1} \sim Poisson(2N_1\mu_i)$ | $x_{i2} \sim Poisson(2N_2\gamma_2\mu_i)$; $\gamma_2$ \~ Gamma($\bar{\gamma_2}$$\beta_2$,$\beta_2)$|
 $H_3$| $\pi_3$ | $x_{i1} \sim Poisson(2N_1\gamma_1\mu_i)$; $\gamma_1$ \~ $Gamma(\bar{\gamma}_1\beta_1,\beta_1)$ | $x_{i2} \sim Poisson(2N_2\gamma_2\mu_i)$; $\gamma_2$ \~ $Gamma(\bar{\gamma}_2\beta_2,\beta_2)$|
 
 **Figure 1. $\texttt{mTADA}$ framework.**
