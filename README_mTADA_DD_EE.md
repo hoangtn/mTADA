@@ -23,7 +23,7 @@ This notebook descibes steps used to jointly analyze two traits by
 I. Introduction
 ---------------
 
-**`mTADA` jointly analyze de novo mutations (DNMs) of two traits to 1)
+**`mTADA` jointly analyzes de novo mutations (DNMs) of two traits to 1)
 estimate the gene-level genetic overlap of the two traits; 2) report
 shared and specific risk genes; and 3) identify additional risk genes
 for each analyzed trait.**
