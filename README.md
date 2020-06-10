@@ -10,7 +10,6 @@ We describe steps to run `mTADA` in this file: [README_mTADA_DD_EE.md](README_mT
 
 ### Citation
 
-**`mTADA`: a framework for identifying risk genes from de novo mutations
-in multiple traits.** Tan-Hoang Nguyen, Amanda Dobbyn, Ruth C. Brown,
-Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F
-Sullivan, Xin He, Eli A. Stahl.
+**`mTADA` is a framework for identifying risk genes from de novo mutations in multiple traits**. Tan-Hoang Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F
+Sullivan, Xin He, Eli A. Stahl. 
+**Nat Commun 11, 2929 (2020). https://doi.org/10.1038/s41467-020-16487-z**.
