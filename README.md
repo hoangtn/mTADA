@@ -10,11 +10,8 @@ We describe steps to run `mTADA` in this file: [README_mTADA_DD_EE.md](README_mT
 
 ### Download data from our analyses for pairs of traits
 
-Users can view the results from the Shiny server here: https://hoangtn.shinyapps.io/mtadaresults/.
+Analysis results of mTADA can be downloaded from https://hoangtn.shinyapps.io/mtadaresults/.
 
-### Note
-
-We used MCMC in our analyses to obtain credible intervals of parameters. If users need a faster version of `mTADA`, please email us.
 
 ### Citation
 
