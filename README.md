@@ -14,7 +14,7 @@ Users can view the results from the Shiny server here: https://hoangtn.shinyapps
 
 ### Note
 
-We used MCMC in our analyses to obtain credible intervals. If users need a faster version of mTADA, please email us.
+We used MCMC in our analyses to obtain credible intervals of parameters. If users need a faster version of `mTADA`, please email us.
 
 ### Citation
 
