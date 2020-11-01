@@ -12,6 +12,9 @@ We describe steps to run `mTADA` in this file: [README_mTADA_DD_EE.md](README_mT
 
 Analysis results of mTADA can be downloaded from https://hoangtn.shinyapps.io/mtadaresults/.
 
+###Note (a new version of `mTADA`).
+
+A new version of the package will be updated soon. Please [email](mailto:tanhoang.nguyen@vcuhealth.org), if there is any issues with the current version.
 
 ### Citation
 
