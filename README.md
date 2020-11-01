@@ -14,7 +14,7 @@ Analysis results of mTADA can be downloaded from https://hoangtn.shinyapps.io/mt
 
 ###Note (a new version of `mTADA`).
 
-A new version of the package will be updated soon. Please [email](mailto:tanhoang.nguyen@vcuhealth.org), if there is any issues with the current version.
+A new version of the package will be updated soon. Please [email](mailto:tanhoang.nguyen@vcuhealth.org) us, if there is any issues with the current version.
 
 ### Citation
 
