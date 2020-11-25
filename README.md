@@ -14,7 +14,7 @@ Analysis results of mTADA can be downloaded from https://hoangtn.shinyapps.io/mt
 
 ### Note (a new version of `mTADA`).
 
-A new version of the package will be updated soon. Please email(mailto:hoangtannguyenvn@gmail.com) us, if you plan to use the new version.
+A new version of the package will be updated soon. Please [email](mailto:hoangtannguyenvn@gmail.com) us, if you plan to use the new version.
 
 ### Citation
 
