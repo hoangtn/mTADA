@@ -25,12 +25,14 @@ mTADA <- function(geneName = NULL,
                   printMessage = FALSE, #
                   useMCMC = FALSE,
                   iSeed = NULL
-    ){
+                  ){
+    dataDN1 <- data.frame(dataDN1)
+    dataDN2 <- data.frame(dataDN2)
 
     NCdn1 <- dim(dataDN1)[2]
     NCdn2 <- dim(dataDN2)[2]
-    Ndn1 <- rep(ntrio1, NCdn1)
-    Ndn2 <- rep(ntrio2, NCdn2)
+    Ndn1 <- array(rep(ntrio1, NCdn1))
+    Ndn2 <- array(rep(ntrio2, NCdn2))
 
     if ((is.null(nCore)) & (useMCMC)){
         message("No information for core numbers (nCore); therefore, nCore = nChain: ", nChain, " core(s) is/are used\n")   
@@ -46,8 +48,8 @@ mTADA <- function(geneName = NULL,
                         Ndn1 = Ndn1, Ndn2 = Ndn2, 
                         dataDN1 = data.matrix(dataDN1),
                         dataDN2 = data.matrix(dataDN2),
-                        hyperGammaMeanDN1 = hyperGammaMeanDN1,
-                      hyperGammaMeanDN2 = hyperGammaMeanDN2, 
+                        hyperGammaMeanDN1 = array(hyperGammaMeanDN1),
+                      hyperGammaMeanDN2 = array(hyperGammaMeanDN2), 
                       mutRate1 = data.matrix(mutRate1), 
                       mutRate2 = data.matrix(mutRate2), 
                         adjustHyperBeta = adjustHyperBeta,
@@ -56,8 +58,8 @@ mTADA <- function(geneName = NULL,
                         lowerHyperGamma = lowerHyperGamma,
                         lowerGamma = lowerGamma,
                         lowerBeta = lowerBeta,
-                        hyperBetaDN01 = hyperBetaDN01,
-                        hyperBetaDN02 = hyperBetaDN02,
+                        hyperBetaDN01 = array(hyperBetaDN01),
+                        hyperBetaDN02 = array(hyperBetaDN02),
                         pi01 = p1,
                         pi02 = p2                      )
 
