@@ -16,6 +16,10 @@ Analysis results of mTADA can be downloaded from https://hoangtn.shinyapps.io/mt
 
 A new version of the package will be updated soon. Please [email](mailto:hoangtannguyenvn@gmail.com) us, if you plan to use the new version.
 
+### License 
+
+This project is licensed under GNU GPL v3.
+
 ### Citation
 
 **`mTADA` is a framework for identifying risk genes from de novo mutations in multiple traits**. Tan-Hoang Nguyen, Amanda Dobbyn, Ruth C. Brown, Brien P. Riley, Joseph Buxbaum, Dalila Pinto, Shaun M Purcell, Patrick F
